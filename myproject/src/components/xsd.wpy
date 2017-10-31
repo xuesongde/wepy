@@ -1,0 +1,49 @@
+<style lang="less">
+  .xsd{
+    font-size:44px;
+  }
+  }
+</style>
+<template>
+  <view class="xsd" @tap="xsd">
+    {{title}}
+    <icon type="success" size="10"/>
+  </view>
+</template>
+<script>
+  function p(arry){
+    for(var i=0;i<arry.length;i++){
+      for(var j=0;j<arry.length-i-1;j++){
+        if(arry[j]>arry[j+1]){
+          var o=arry[j+1];
+          arry[j+1]=arry[j];
+          arry[j]=o;
+        }
+      }
+    }
+    return arry;
+  }
+  import wepy from 'wepy'
+
+  export default class Xsd extends wepy.component {
+    props = {
+      ids:String,
+      item:String
+    }
+    data={
+      title:'薛松德'
+    }
+    onLoad(){
+      
+    }
+    methods = {
+      xsdSay (arg) {
+        console.log('xsd say...'+arg)
+      },
+      xsd　(){
+        console.log(this.item);
+        console.log('触摸xsd....');
+      }
+    }
+  }
+</script>

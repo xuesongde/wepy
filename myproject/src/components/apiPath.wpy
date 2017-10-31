@@ -1,0 +1,9 @@
+
+<script>
+  import wepy from 'wepy'
+  console.log(wepy);
+  // const domain = process.env.NODE_ENV === 'production'?'https://u.jyallpay.com/sbeco-routine-web-api':'http://10.10.36.195';
+  export default {
+    SUPPORT           : `http://10.10.36.195/v1/shopCoupon/queryCouponTypesStatus`
+  }
+</script>
