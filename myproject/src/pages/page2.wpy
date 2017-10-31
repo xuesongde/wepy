@@ -1,0 +1,49 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="userinfo" @tap="handleViewTap">
+      <view class="userinfo-nickname">{{ nickName }}</view>
+    </view>
+    <view>
+      page2
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Page2 extends wepy.page {
+    data={
+      nickName:'nikeyang'
+    }
+    onLoad() {
+      console.log('onload...')
+      let self = this
+      console.log(this)
+      console.log(this.$parent)
+      console.log(this.$parent.globalData)
+      this.nickName=this.$parent.globalData.userInfo.nickName
+    }
+    methods={
+      handleViewTap(){
+        console.log('handleViewTap...')
+      }
+    }
+  }
+</script>
