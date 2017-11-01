@@ -23,6 +23,7 @@
     <view>
       page2
     </view>
+    <image class="qr_code" src="../images/cs.jpg"></image>
   </view>
 </template>
 
