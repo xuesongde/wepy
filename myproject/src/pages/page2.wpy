@@ -25,13 +25,56 @@
     </view>
     <image class="qr_code" src="../images/cs.jpg"></image>
   </view>
+  <!-- 轮播 -->
+  <swiper indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <button bindtap="changeIndicatorDots"> indicator-dots </button>
+  <button bindtap="changeAutoplay"> autoplay </button>
+  <slider bindchange="intervalChange" show-value min="500" max="2000"/>
+  <slider bindchange="durationChange" show-value min="1000" max="10000"/>
+  <!-- 选择 -->
+  <view class="section">
+    <view class="section__title">普通选择器</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        当前选择：{{array[index]}}
+      </view>
+    </picker>
+  </view>
+  <!-- 视频 -->
+  <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio" controls loop></audio>
+
+  <button type="primary" bindtap="audioPlay">播放</button>
+  <button type="primary" bindtap="audioPause">暂停</button>
+  <button type="primary" bindtap="audio14">设置当前播放时间为14秒</button>
+  <button type="primary" bindtap="audioStart">回到开头</button>
 </template>
 
 <script>
   import wepy from 'wepy'
   export default class Page2 extends wepy.page {
     data={
-      nickName:'nikeyang'
+      nickName:'nikeyang',
+      array: ['美国', '中国', '巴西', '日本'],
+      imgUrls: [
+        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ],
+      indicatorDots: false,
+      autoplay: false,
+      interval: 5000,
+      poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
+      name: '此时此刻',
+      author: '许巍',
+      src: 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46',
+      duration: 1000
     }
     onLoad() {
       console.log('onload...')
@@ -39,11 +82,53 @@
       console.log(this)
       console.log(this.$parent)
       console.log(this.$parent.globalData)
-      this.nickName=this.$parent.globalData.userInfo.nickName
+      this.nickName=this.$parent.globalData.userInfo==null?'从index进入':this.$parent.globalData.userInfo.nickName
+    }
+    onReady(e) {
+      // 使用 wx.createAudioContext 获取 audio 上下文 context
+      this.audioCtx = wx.createAudioContext('myAudio')
     }
     methods={
       handleViewTap(){
         console.log('handleViewTap...')
+      },
+      changeIndicatorDots: function(e) {
+        this.setData({
+          indicatorDots: !this.data.indicatorDots
+        })
+      },
+      changeAutoplay: function(e) {
+        this.setData({
+          autoplay: !this.data.autoplay
+        })
+      },
+      intervalChange: function(e) {
+        this.setData({
+          interval: e.detail.value
+        })
+      },
+      durationChange: function(e) {
+        this.setData({
+          duration: e.detail.value
+        })
+      },
+      bindPickerChange: function(e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value)
+        this.setData({
+          index: e.detail.value
+        })
+      },
+      audioPlay: function () {
+        this.audioCtx.play()
+      },
+      audioPause: function () {
+        this.audioCtx.pause()
+      },
+      audio14: function () {
+        this.audioCtx.seek(14)
+      },
+      audioStart: function () {
+        this.audioCtx.seek(0)
       }
     }
   }

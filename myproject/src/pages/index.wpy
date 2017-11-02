@@ -72,10 +72,12 @@
       <list></list>
     </panel>
     <panel>
-      <repeat for="{{xsdList}}" key="index" index="index" item="item">
-        <xsd :item="item" ids="aaa"></xsd>
-      </repeat>
+      <!-- <repeat for="{{xsdList}}" key="index" index="index" item="item">
+        <xsd :item="item" ids="aaa" :title="parentTitle" :syncTitle.sync="parentTitle" :twoWayTitle="parentTitle"></xsd>
+      </repeat> -->
+      <xsd :item="item" ids="aaa" :title="parentTitle" :syncTitle.sync="parentTitle" :twoWayTitle="parentTitle"></xsd>
     </panel>
+    <view @tap="handleParent">父组件值:{{parentTitle}}</view>
     <toast />
   </view>
 </template>
@@ -109,6 +111,7 @@
 
     data = {
       xsdList:[1,2,3],
+      parentTitle: 'p-title',
       mynum: 20,
       userInfo: {
         nickName: '加载中...'
@@ -170,6 +173,15 @@
     }
 
     methods = {
+      var self=this;
+      handleParent () {
+        console.log('handleParent');
+        this.parentTitle='父组件修改';
+        self.$apply();
+        // this.setData({
+        //   parentTitle: '改变过的父组件属性'
+        // })
+      },
       plus () {
         this.mynum++
       },
@@ -225,7 +237,7 @@
       let self = this
       console.log(ApiPath);
       //调用子组件方法
-      this.$invoke('xsd', 'xsdSay', 'someArgs');
+      //this.$invoke('xsd', 'xsdSay', 'someArgs');
       console.log('onload...')
       this.$parent.getUserInfo(function (userInfo) {
         if (userInfo) {
