@@ -178,9 +178,9 @@
         console.log('handleParent');
         this.parentTitle='父组件修改';
         self.$apply();
-        // this.setData({
-        //   parentTitle: '改变过的父组件属性'
-        // })
+        wx.navigateTo({
+          url: 'page2'
+        })
       },
       plus () {
         this.mynum++
