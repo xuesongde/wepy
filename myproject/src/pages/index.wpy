@@ -177,7 +177,7 @@
       handleParent () {
         console.log('handleParent');
         this.parentTitle='父组件修改';
-        self.$apply();
+        //self.$apply();
         wx.navigateTo({
           url: 'page2'
         })
